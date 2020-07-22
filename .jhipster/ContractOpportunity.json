@@ -91,7 +91,7 @@
   "changelogDate": "20200722185848",
   "entityTableName": "contract_opportunity",
   "dto": "mapstruct",
-  "pagination": "no",
+  "pagination": "pagination",
   "service": "serviceClass",
   "jpaMetamodelFiltering": false,
   "fluentMethods": true,

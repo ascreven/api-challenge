@@ -39,6 +39,7 @@ export const contractOpportunityRoute: Routes = [
     component: ContractOpportunityComponent,
     data: {
       authorities: [Authority.USER],
+      defaultSort: 'id,asc',
       pageTitle: 'ContractOpportunities',
     },
     canActivate: [UserRouteAccessService],

@@ -23,3 +23,5 @@ entity ContractOpportunity {
     organizationtype String
     description TextBlob
 }
+
+paginate * with pagination
