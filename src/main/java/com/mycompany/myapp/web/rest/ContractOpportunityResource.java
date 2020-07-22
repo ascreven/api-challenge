@@ -1,16 +1,24 @@
 package com.mycompany.myapp.web.rest;
 
 import com.mycompany.myapp.domain.ContractOpportunity;
-import com.mycompany.myapp.repository.ContractOpportunityRepository;
+import com.mycompany.myapp.service.ContractOpportunityService;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
+import com.mycompany.myapp.service.dto.ContractOpportunityCriteria;
+import com.mycompany.myapp.service.dto.IndustryOppCountDTO;
+import com.mycompany.myapp.service.ContractOpportunityQueryService;
 
 import io.github.jhipster.web.util.HeaderUtil;
+import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -24,71 +32,60 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class ContractOpportunityResource {
 
     private final Logger log = LoggerFactory.getLogger(ContractOpportunityResource.class);
 
-    private static final String ENTITY_NAME = "contractOpportunity";
+    private final ContractOpportunityService contractOpportunityService;
 
-    @Value("${jhipster.clientApp.name}")
-    private String applicationName;
+    private final ContractOpportunityQueryService contractOpportunityQueryService;
 
-    private final ContractOpportunityRepository contractOpportunityRepository;
-
-    public ContractOpportunityResource(ContractOpportunityRepository contractOpportunityRepository) {
-        this.contractOpportunityRepository = contractOpportunityRepository;
-    }
-
-    /**
-     * {@code POST  /contract-opportunities} : Create a new contractOpportunity.
-     *
-     * @param contractOpportunity the contractOpportunity to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new contractOpportunity, or with status {@code 400 (Bad Request)} if the contractOpportunity has already an ID.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     */
-    @PostMapping("/contract-opportunities")
-    public ResponseEntity<ContractOpportunity> createContractOpportunity(@Valid @RequestBody ContractOpportunity contractOpportunity) throws URISyntaxException {
-        log.debug("REST request to save ContractOpportunity : {}", contractOpportunity);
-        if (contractOpportunity.getId() != null) {
-            throw new BadRequestAlertException("A new contractOpportunity cannot already have an ID", ENTITY_NAME, "idexists");
-        }
-        ContractOpportunity result = contractOpportunityRepository.save(contractOpportunity);
-        return ResponseEntity.created(new URI("/api/contract-opportunities/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
-            .body(result);
-    }
-
-    /**
-     * {@code PUT  /contract-opportunities} : Updates an existing contractOpportunity.
-     *
-     * @param contractOpportunity the contractOpportunity to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated contractOpportunity,
-     * or with status {@code 400 (Bad Request)} if the contractOpportunity is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the contractOpportunity couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     */
-    @PutMapping("/contract-opportunities")
-    public ResponseEntity<ContractOpportunity> updateContractOpportunity(@Valid @RequestBody ContractOpportunity contractOpportunity) throws URISyntaxException {
-        log.debug("REST request to update ContractOpportunity : {}", contractOpportunity);
-        if (contractOpportunity.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        ContractOpportunity result = contractOpportunityRepository.save(contractOpportunity);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, contractOpportunity.getId().toString()))
-            .body(result);
+    public ContractOpportunityResource(ContractOpportunityService contractOpportunityService, ContractOpportunityQueryService contractOpportunityQueryService) {
+        this.contractOpportunityService = contractOpportunityService;
+        this.contractOpportunityQueryService = contractOpportunityQueryService;
     }
 
     /**
      * {@code GET  /contract-opportunities} : get all the contractOpportunities.
      *
+     * @param pageable the pagination information.
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of contractOpportunities in body.
      */
     @GetMapping("/contract-opportunities")
-    public List<ContractOpportunity> getAllContractOpportunities() {
-        log.debug("REST request to get all ContractOpportunities");
-        return contractOpportunityRepository.findAll();
+    public ResponseEntity<List<ContractOpportunity>> getAllContractOpportunities(ContractOpportunityCriteria criteria, Pageable pageable) {
+        log.debug("REST request to get ContractOpportunities by criteria: {}", criteria);
+        Page<ContractOpportunity> page = contractOpportunityQueryService.findByCriteria(criteria, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /contract-opportunities/count} : count all the contractOpportunities.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/contract-opportunities/count")
+    public ResponseEntity<Long> countContractOpportunities(ContractOpportunityCriteria criteria) {
+        log.debug("REST request to count ContractOpportunities by criteria: {}", criteria);
+        return ResponseEntity.ok().body(contractOpportunityQueryService.countByCriteria(criteria));
+    }
+
+    /*
+     * {@code GET  /contract-opportunities/count} : count all the contractOpportunities.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/contract-opportunities/industry_opp_counts")
+    public ResponseEntity<IndustryOppCountDTO> countIndustryOpportunities() {
+        log.debug("REST request to count ContractOpportunities by industry");
+        IndustryOppCountDTO count = new IndustryOppCountDTO();
+        count.setOppCount(new Long(5342));
+        count.setNaicsCode("840239");
+        count.setTitle("My Fantastic Title");
+        return ResponseEntity.ok().body(count);
     }
 
     /**
@@ -100,20 +97,7 @@ public class ContractOpportunityResource {
     @GetMapping("/contract-opportunities/{id}")
     public ResponseEntity<ContractOpportunity> getContractOpportunity(@PathVariable Long id) {
         log.debug("REST request to get ContractOpportunity : {}", id);
-        Optional<ContractOpportunity> contractOpportunity = contractOpportunityRepository.findById(id);
+        Optional<ContractOpportunity> contractOpportunity = contractOpportunityService.findOne(id);
         return ResponseUtil.wrapOrNotFound(contractOpportunity);
-    }
-
-    /**
-     * {@code DELETE  /contract-opportunities/:id} : delete the "id" contractOpportunity.
-     *
-     * @param id the id of the contractOpportunity to delete.
-     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
-     */
-    @DeleteMapping("/contract-opportunities/{id}")
-    public ResponseEntity<Void> deleteContractOpportunity(@PathVariable Long id) {
-        log.debug("REST request to delete ContractOpportunity : {}", id);
-        contractOpportunityRepository.deleteById(id);
-        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString())).build();
     }
 }

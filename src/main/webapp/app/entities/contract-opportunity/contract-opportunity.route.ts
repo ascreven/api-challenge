@@ -10,7 +10,6 @@ import { IContractOpportunity, ContractOpportunity } from 'app/shared/model/cont
 import { ContractOpportunityService } from './contract-opportunity.service';
 import { ContractOpportunityComponent } from './contract-opportunity.component';
 import { ContractOpportunityDetailComponent } from './contract-opportunity-detail.component';
-import { ContractOpportunityUpdateComponent } from './contract-opportunity-update.component';
 
 @Injectable({ providedIn: 'root' })
 export class ContractOpportunityResolve implements Resolve<IContractOpportunity> {
@@ -40,6 +39,7 @@ export const contractOpportunityRoute: Routes = [
     component: ContractOpportunityComponent,
     data: {
       authorities: [Authority.USER],
+      defaultSort: 'id,asc',
       pageTitle: 'ContractOpportunities',
     },
     canActivate: [UserRouteAccessService],
@@ -47,30 +47,6 @@ export const contractOpportunityRoute: Routes = [
   {
     path: ':id/view',
     component: ContractOpportunityDetailComponent,
-    resolve: {
-      contractOpportunity: ContractOpportunityResolve,
-    },
-    data: {
-      authorities: [Authority.USER],
-      pageTitle: 'ContractOpportunities',
-    },
-    canActivate: [UserRouteAccessService],
-  },
-  {
-    path: 'new',
-    component: ContractOpportunityUpdateComponent,
-    resolve: {
-      contractOpportunity: ContractOpportunityResolve,
-    },
-    data: {
-      authorities: [Authority.USER],
-      pageTitle: 'ContractOpportunities',
-    },
-    canActivate: [UserRouteAccessService],
-  },
-  {
-    path: ':id/edit',
-    component: ContractOpportunityUpdateComponent,
     resolve: {
       contractOpportunity: ContractOpportunityResolve,
     },
