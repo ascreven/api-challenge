@@ -1,6 +1,7 @@
 package com.mycompany.myapp.service;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import javax.persistence.criteria.JoinType;
 
@@ -18,6 +19,7 @@ import com.mycompany.myapp.domain.ContractOpportunity;
 import com.mycompany.myapp.domain.*; // for static metamodels
 import com.mycompany.myapp.repository.ContractOpportunityRepository;
 import com.mycompany.myapp.service.dto.ContractOpportunityCriteria;
+import com.mycompany.myapp.service.dto.IndustryOppCountDTO;
 
 /**
  * Service for executing complex queries for {@link ContractOpportunity} entities in the database.
@@ -72,6 +74,26 @@ public class ContractOpportunityQueryService extends QueryService<ContractOpport
         log.debug("count by criteria : {}", criteria);
         final Specification<ContractOpportunity> specification = createSpecification(criteria);
         return contractOpportunityRepository.count(specification);
+    }
+
+    @Transactional(readOnly = true)
+    public List<IndustryOppCountDTO> countIndustryOpportunities() {
+        log.debug("REST request to count ContractOpportunities by industry");
+
+        IndustryOppCountDTO count = new IndustryOppCountDTO();
+        count.setOppCount(new Long(5342));
+        count.setNaicsCode("840239");
+        count.setTitle("My Fantastic Title");
+
+        IndustryOppCountDTO next = new IndustryOppCountDTO();
+        next.setOppCount(new Long(1612));
+        next.setNaicsCode("854938");
+        next.setTitle("My Superb Title");
+
+        ArrayList<IndustryOppCountDTO> result = new ArrayList<IndustryOppCountDTO>();
+        result.add(count);
+        result.add(next);
+        return result;
     }
 
     /**

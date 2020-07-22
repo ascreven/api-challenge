@@ -82,21 +82,7 @@ public class ContractOpportunityResource {
     @GetMapping("/contract-opportunities/industry_opp_counts")
     public ResponseEntity<List<IndustryOppCountDTO>> countIndustryOpportunities() {
         log.debug("REST request to count ContractOpportunities by industry");
-
-        IndustryOppCountDTO count = new IndustryOppCountDTO();
-        count.setOppCount(new Long(5342));
-        count.setNaicsCode("840239");
-        count.setTitle("My Fantastic Title");
-
-        IndustryOppCountDTO next = new IndustryOppCountDTO();
-        next.setOppCount(new Long(1612));
-        next.setNaicsCode("854938");
-        next.setTitle("My Superb Title");
-
-        ArrayList<IndustryOppCountDTO> result = new ArrayList<IndustryOppCountDTO>();
-        result.add(count);
-        result.add(next);
-        return ResponseEntity.ok().body(result);
+        return ResponseEntity.ok().body(contractOpportunityQueryService.countIndustryOpportunities());
     }
 
 

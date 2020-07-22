@@ -23,5 +23,13 @@ entity ContractOpportunity {
     description TextBlob
 }
 
+@readOnly
+@service(serviceClass)
+entity Naics {
+    code String
+    title String maxlength(1024)
+    description TextBlob
+}
+
 paginate * with pagination
-filter ContractOpportunity
+filter *
