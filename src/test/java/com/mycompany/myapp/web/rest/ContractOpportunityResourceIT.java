@@ -3,6 +3,9 @@ package com.mycompany.myapp.web.rest;
 import com.mycompany.myapp.OpportunitiesApp;
 import com.mycompany.myapp.domain.ContractOpportunity;
 import com.mycompany.myapp.repository.ContractOpportunityRepository;
+import com.mycompany.myapp.service.ContractOpportunityService;
+import com.mycompany.myapp.service.dto.ContractOpportunityDTO;
+import com.mycompany.myapp.service.mapper.ContractOpportunityMapper;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -96,6 +99,12 @@ public class ContractOpportunityResourceIT {
     private ContractOpportunityRepository contractOpportunityRepository;
 
     @Autowired
+    private ContractOpportunityMapper contractOpportunityMapper;
+
+    @Autowired
+    private ContractOpportunityService contractOpportunityService;
+
+    @Autowired
     private EntityManager em;
 
     @Autowired
@@ -171,62 +180,6 @@ public class ContractOpportunityResourceIT {
 
     @Test
     @Transactional
-    public void createContractOpportunity() throws Exception {
-        int databaseSizeBeforeCreate = contractOpportunityRepository.findAll().size();
-        // Create the ContractOpportunity
-        restContractOpportunityMockMvc.perform(post("/api/contract-opportunities")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(contractOpportunity)))
-            .andExpect(status().isCreated());
-
-        // Validate the ContractOpportunity in the database
-        List<ContractOpportunity> contractOpportunityList = contractOpportunityRepository.findAll();
-        assertThat(contractOpportunityList).hasSize(databaseSizeBeforeCreate + 1);
-        ContractOpportunity testContractOpportunity = contractOpportunityList.get(contractOpportunityList.size() - 1);
-        assertThat(testContractOpportunity.getContractId()).isEqualTo(DEFAULT_CONTRACT_ID);
-        assertThat(testContractOpportunity.getTitle()).isEqualTo(DEFAULT_TITLE);
-        assertThat(testContractOpportunity.getSol()).isEqualTo(DEFAULT_SOL);
-        assertThat(testContractOpportunity.getAgency()).isEqualTo(DEFAULT_AGENCY);
-        assertThat(testContractOpportunity.getSubTier()).isEqualTo(DEFAULT_SUB_TIER);
-        assertThat(testContractOpportunity.getOffice()).isEqualTo(DEFAULT_OFFICE);
-        assertThat(testContractOpportunity.getPosteddate()).isEqualTo(DEFAULT_POSTEDDATE);
-        assertThat(testContractOpportunity.getType()).isEqualTo(DEFAULT_TYPE);
-        assertThat(testContractOpportunity.getBasetype()).isEqualTo(DEFAULT_BASETYPE);
-        assertThat(testContractOpportunity.getSetasidecode()).isEqualTo(DEFAULT_SETASIDECODE);
-        assertThat(testContractOpportunity.getSetaside()).isEqualTo(DEFAULT_SETASIDE);
-        assertThat(testContractOpportunity.getResponsedeadline()).isEqualTo(DEFAULT_RESPONSEDEADLINE);
-        assertThat(testContractOpportunity.getNaicscode()).isEqualTo(DEFAULT_NAICSCODE);
-        assertThat(testContractOpportunity.getClassificationcode()).isEqualTo(DEFAULT_CLASSIFICATIONCODE);
-        assertThat(testContractOpportunity.getPopstate()).isEqualTo(DEFAULT_POPSTATE);
-        assertThat(testContractOpportunity.getPopzip()).isEqualTo(DEFAULT_POPZIP);
-        assertThat(testContractOpportunity.getPopcountry()).isEqualTo(DEFAULT_POPCOUNTRY);
-        assertThat(testContractOpportunity.getActive()).isEqualTo(DEFAULT_ACTIVE);
-        assertThat(testContractOpportunity.getOrganizationtype()).isEqualTo(DEFAULT_ORGANIZATIONTYPE);
-        assertThat(testContractOpportunity.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
-    }
-
-    @Test
-    @Transactional
-    public void createContractOpportunityWithExistingId() throws Exception {
-        int databaseSizeBeforeCreate = contractOpportunityRepository.findAll().size();
-
-        // Create the ContractOpportunity with an existing ID
-        contractOpportunity.setId(1L);
-
-        // An entity with an existing ID cannot be created, so this API call must fail
-        restContractOpportunityMockMvc.perform(post("/api/contract-opportunities")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(contractOpportunity)))
-            .andExpect(status().isBadRequest());
-
-        // Validate the ContractOpportunity in the database
-        List<ContractOpportunity> contractOpportunityList = contractOpportunityRepository.findAll();
-        assertThat(contractOpportunityList).hasSize(databaseSizeBeforeCreate);
-    }
-
-
-    @Test
-    @Transactional
     public void getAllContractOpportunities() throws Exception {
         // Initialize the database
         contractOpportunityRepository.saveAndFlush(contractOpportunity);
@@ -296,104 +249,5 @@ public class ContractOpportunityResourceIT {
         // Get the contractOpportunity
         restContractOpportunityMockMvc.perform(get("/api/contract-opportunities/{id}", Long.MAX_VALUE))
             .andExpect(status().isNotFound());
-    }
-
-    @Test
-    @Transactional
-    public void updateContractOpportunity() throws Exception {
-        // Initialize the database
-        contractOpportunityRepository.saveAndFlush(contractOpportunity);
-
-        int databaseSizeBeforeUpdate = contractOpportunityRepository.findAll().size();
-
-        // Update the contractOpportunity
-        ContractOpportunity updatedContractOpportunity = contractOpportunityRepository.findById(contractOpportunity.getId()).get();
-        // Disconnect from session so that the updates on updatedContractOpportunity are not directly saved in db
-        em.detach(updatedContractOpportunity);
-        updatedContractOpportunity
-            .contractId(UPDATED_CONTRACT_ID)
-            .title(UPDATED_TITLE)
-            .sol(UPDATED_SOL)
-            .agency(UPDATED_AGENCY)
-            .subTier(UPDATED_SUB_TIER)
-            .office(UPDATED_OFFICE)
-            .posteddate(UPDATED_POSTEDDATE)
-            .type(UPDATED_TYPE)
-            .basetype(UPDATED_BASETYPE)
-            .setasidecode(UPDATED_SETASIDECODE)
-            .setaside(UPDATED_SETASIDE)
-            .responsedeadline(UPDATED_RESPONSEDEADLINE)
-            .naicscode(UPDATED_NAICSCODE)
-            .classificationcode(UPDATED_CLASSIFICATIONCODE)
-            .popstate(UPDATED_POPSTATE)
-            .popzip(UPDATED_POPZIP)
-            .popcountry(UPDATED_POPCOUNTRY)
-            .active(UPDATED_ACTIVE)
-            .organizationtype(UPDATED_ORGANIZATIONTYPE)
-            .description(UPDATED_DESCRIPTION);
-
-        restContractOpportunityMockMvc.perform(put("/api/contract-opportunities")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(updatedContractOpportunity)))
-            .andExpect(status().isOk());
-
-        // Validate the ContractOpportunity in the database
-        List<ContractOpportunity> contractOpportunityList = contractOpportunityRepository.findAll();
-        assertThat(contractOpportunityList).hasSize(databaseSizeBeforeUpdate);
-        ContractOpportunity testContractOpportunity = contractOpportunityList.get(contractOpportunityList.size() - 1);
-        assertThat(testContractOpportunity.getContractId()).isEqualTo(UPDATED_CONTRACT_ID);
-        assertThat(testContractOpportunity.getTitle()).isEqualTo(UPDATED_TITLE);
-        assertThat(testContractOpportunity.getSol()).isEqualTo(UPDATED_SOL);
-        assertThat(testContractOpportunity.getAgency()).isEqualTo(UPDATED_AGENCY);
-        assertThat(testContractOpportunity.getSubTier()).isEqualTo(UPDATED_SUB_TIER);
-        assertThat(testContractOpportunity.getOffice()).isEqualTo(UPDATED_OFFICE);
-        assertThat(testContractOpportunity.getPosteddate()).isEqualTo(UPDATED_POSTEDDATE);
-        assertThat(testContractOpportunity.getType()).isEqualTo(UPDATED_TYPE);
-        assertThat(testContractOpportunity.getBasetype()).isEqualTo(UPDATED_BASETYPE);
-        assertThat(testContractOpportunity.getSetasidecode()).isEqualTo(UPDATED_SETASIDECODE);
-        assertThat(testContractOpportunity.getSetaside()).isEqualTo(UPDATED_SETASIDE);
-        assertThat(testContractOpportunity.getResponsedeadline()).isEqualTo(UPDATED_RESPONSEDEADLINE);
-        assertThat(testContractOpportunity.getNaicscode()).isEqualTo(UPDATED_NAICSCODE);
-        assertThat(testContractOpportunity.getClassificationcode()).isEqualTo(UPDATED_CLASSIFICATIONCODE);
-        assertThat(testContractOpportunity.getPopstate()).isEqualTo(UPDATED_POPSTATE);
-        assertThat(testContractOpportunity.getPopzip()).isEqualTo(UPDATED_POPZIP);
-        assertThat(testContractOpportunity.getPopcountry()).isEqualTo(UPDATED_POPCOUNTRY);
-        assertThat(testContractOpportunity.getActive()).isEqualTo(UPDATED_ACTIVE);
-        assertThat(testContractOpportunity.getOrganizationtype()).isEqualTo(UPDATED_ORGANIZATIONTYPE);
-        assertThat(testContractOpportunity.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
-    }
-
-    @Test
-    @Transactional
-    public void updateNonExistingContractOpportunity() throws Exception {
-        int databaseSizeBeforeUpdate = contractOpportunityRepository.findAll().size();
-
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException
-        restContractOpportunityMockMvc.perform(put("/api/contract-opportunities")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(contractOpportunity)))
-            .andExpect(status().isBadRequest());
-
-        // Validate the ContractOpportunity in the database
-        List<ContractOpportunity> contractOpportunityList = contractOpportunityRepository.findAll();
-        assertThat(contractOpportunityList).hasSize(databaseSizeBeforeUpdate);
-    }
-
-    @Test
-    @Transactional
-    public void deleteContractOpportunity() throws Exception {
-        // Initialize the database
-        contractOpportunityRepository.saveAndFlush(contractOpportunity);
-
-        int databaseSizeBeforeDelete = contractOpportunityRepository.findAll().size();
-
-        // Delete the contractOpportunity
-        restContractOpportunityMockMvc.perform(delete("/api/contract-opportunities/{id}", contractOpportunity.getId())
-            .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isNoContent());
-
-        // Validate the database contains one less item
-        List<ContractOpportunity> contractOpportunityList = contractOpportunityRepository.findAll();
-        assertThat(contractOpportunityList).hasSize(databaseSizeBeforeDelete - 1);
     }
 }

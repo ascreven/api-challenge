@@ -1,3 +1,6 @@
+@readOnly
+@dto(mapstruct)
+@service(serviceClass)
 entity ContractOpportunity {
     contractId String
     title String maxlength(1024)

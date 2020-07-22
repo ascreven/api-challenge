@@ -2,11 +2,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { JhiEventManager, JhiDataUtils } from 'ng-jhipster';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { IContractOpportunity } from 'app/shared/model/contract-opportunity.model';
 import { ContractOpportunityService } from './contract-opportunity.service';
-import { ContractOpportunityDeleteDialogComponent } from './contract-opportunity-delete-dialog.component';
 
 @Component({
   selector: 'jhi-contract-opportunity',
@@ -19,8 +17,7 @@ export class ContractOpportunityComponent implements OnInit, OnDestroy {
   constructor(
     protected contractOpportunityService: ContractOpportunityService,
     protected dataUtils: JhiDataUtils,
-    protected eventManager: JhiEventManager,
-    protected modalService: NgbModal
+    protected eventManager: JhiEventManager
   ) {}
 
   loadAll(): void {
@@ -55,10 +52,5 @@ export class ContractOpportunityComponent implements OnInit, OnDestroy {
 
   registerChangeInContractOpportunities(): void {
     this.eventSubscriber = this.eventManager.subscribe('contractOpportunityListModification', () => this.loadAll());
-  }
-
-  delete(contractOpportunity: IContractOpportunity): void {
-    const modalRef = this.modalService.open(ContractOpportunityDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
-    modalRef.componentInstance.contractOpportunity = contractOpportunity;
   }
 }

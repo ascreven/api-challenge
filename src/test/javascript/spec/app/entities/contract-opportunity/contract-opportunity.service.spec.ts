@@ -66,73 +66,6 @@ describe('Service Tests', () => {
         expect(expectedResult).toMatchObject(elemDefault);
       });
 
-      it('should create a ContractOpportunity', () => {
-        const returnedFromService = Object.assign(
-          {
-            id: 0,
-            posteddate: currentDate.format(DATE_FORMAT),
-            responsedeadline: currentDate.format(DATE_FORMAT),
-          },
-          elemDefault
-        );
-
-        const expected = Object.assign(
-          {
-            posteddate: currentDate,
-            responsedeadline: currentDate,
-          },
-          returnedFromService
-        );
-
-        service.create(new ContractOpportunity()).subscribe(resp => (expectedResult = resp.body));
-
-        const req = httpMock.expectOne({ method: 'POST' });
-        req.flush(returnedFromService);
-        expect(expectedResult).toMatchObject(expected);
-      });
-
-      it('should update a ContractOpportunity', () => {
-        const returnedFromService = Object.assign(
-          {
-            contractId: 'BBBBBB',
-            title: 'BBBBBB',
-            sol: 'BBBBBB',
-            agency: 'BBBBBB',
-            subTier: 'BBBBBB',
-            office: 'BBBBBB',
-            posteddate: currentDate.format(DATE_FORMAT),
-            type: 'BBBBBB',
-            basetype: 'BBBBBB',
-            setasidecode: 'BBBBBB',
-            setaside: 'BBBBBB',
-            responsedeadline: currentDate.format(DATE_FORMAT),
-            naicscode: 'BBBBBB',
-            classificationcode: 'BBBBBB',
-            popstate: 'BBBBBB',
-            popzip: 'BBBBBB',
-            popcountry: 'BBBBBB',
-            active: 'BBBBBB',
-            organizationtype: 'BBBBBB',
-            description: 'BBBBBB',
-          },
-          elemDefault
-        );
-
-        const expected = Object.assign(
-          {
-            posteddate: currentDate,
-            responsedeadline: currentDate,
-          },
-          returnedFromService
-        );
-
-        service.update(expected).subscribe(resp => (expectedResult = resp.body));
-
-        const req = httpMock.expectOne({ method: 'PUT' });
-        req.flush(returnedFromService);
-        expect(expectedResult).toMatchObject(expected);
-      });
-
       it('should return a list of ContractOpportunity', () => {
         const returnedFromService = Object.assign(
           {
@@ -174,14 +107,6 @@ describe('Service Tests', () => {
         req.flush([returnedFromService]);
         httpMock.verify();
         expect(expectedResult).toContainEqual(expected);
-      });
-
-      it('should delete a ContractOpportunity', () => {
-        service.delete(123).subscribe(resp => (expectedResult = resp.ok));
-
-        const req = httpMock.expectOne({ method: 'DELETE' });
-        req.flush({ status: 200 });
-        expect(expectedResult);
       });
     });
 

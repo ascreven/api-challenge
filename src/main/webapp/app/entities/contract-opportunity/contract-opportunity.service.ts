@@ -18,20 +18,6 @@ export class ContractOpportunityService {
 
   constructor(protected http: HttpClient) {}
 
-  create(contractOpportunity: IContractOpportunity): Observable<EntityResponseType> {
-    const copy = this.convertDateFromClient(contractOpportunity);
-    return this.http
-      .post<IContractOpportunity>(this.resourceUrl, copy, { observe: 'response' })
-      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
-  }
-
-  update(contractOpportunity: IContractOpportunity): Observable<EntityResponseType> {
-    const copy = this.convertDateFromClient(contractOpportunity);
-    return this.http
-      .put<IContractOpportunity>(this.resourceUrl, copy, { observe: 'response' })
-      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
-  }
-
   find(id: number): Observable<EntityResponseType> {
     return this.http
       .get<IContractOpportunity>(`${this.resourceUrl}/${id}`, { observe: 'response' })
@@ -43,10 +29,6 @@ export class ContractOpportunityService {
     return this.http
       .get<IContractOpportunity[]>(this.resourceUrl, { params: options, observe: 'response' })
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
-  }
-
-  delete(id: number): Observable<HttpResponse<{}>> {
-    return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
   protected convertDateFromClient(contractOpportunity: IContractOpportunity): IContractOpportunity {
