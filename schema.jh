@@ -1,0 +1,22 @@
+entity ContractOpportunity {
+    contractId String
+    title String maxlength(1024)
+    sol String
+    agency String
+    subTier String
+    office String
+    posteddate LocalDate
+    type String
+    basetype String
+    setasidecode String
+    setaside String
+    responsedeadline LocalDate
+    naicscode String
+    classificationcode String
+    popstate String
+    popzip String
+    popcountry String
+    active String
+    organizationtype String
+    description TextBlob
+}

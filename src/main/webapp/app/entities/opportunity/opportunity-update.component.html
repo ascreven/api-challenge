@@ -1,0 +1,160 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-opportunity-heading">Create or edit a Opportunity</h2>
+
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_contractId">Contract Id</label>
+                    <input type="text" class="form-control" name="contractId" id="field_contractId"
+                           formControlName="contractId"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_title">Title</label>
+                    <input type="text" class="form-control" name="title" id="field_title"
+                           formControlName="title"/>
+                    <div *ngIf="editForm.get('title')!.invalid && (editForm.get('title')!.dirty || editForm.get('title')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('title')?.errors?.maxlength">
+                        This field cannot be longer than 1024 characters.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_sol">Sol</label>
+                    <input type="text" class="form-control" name="sol" id="field_sol"
+                           formControlName="sol"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_agency">Agency</label>
+                    <input type="text" class="form-control" name="agency" id="field_agency"
+                           formControlName="agency"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_subTier">Sub Tier</label>
+                    <input type="text" class="form-control" name="subTier" id="field_subTier"
+                           formControlName="subTier"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_office">Office</label>
+                    <input type="text" class="form-control" name="office" id="field_office"
+                           formControlName="office"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_posteddate">Posteddate</label>
+                    <div class="input-group">
+                        <input id="field_posteddate" type="text" class="form-control" name="posteddate" ngbDatepicker #posteddateDp="ngbDatepicker" formControlName="posteddate"/>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="posteddateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_type">Type</label>
+                    <input type="text" class="form-control" name="type" id="field_type"
+                           formControlName="type"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_basetype">Basetype</label>
+                    <input type="text" class="form-control" name="basetype" id="field_basetype"
+                           formControlName="basetype"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_setasidecode">Setasidecode</label>
+                    <input type="text" class="form-control" name="setasidecode" id="field_setasidecode"
+                           formControlName="setasidecode"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_setaside">Setaside</label>
+                    <input type="text" class="form-control" name="setaside" id="field_setaside"
+                           formControlName="setaside"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_responsedeadline">Responsedeadline</label>
+                    <div class="input-group">
+                        <input id="field_responsedeadline" type="text" class="form-control" name="responsedeadline" ngbDatepicker #responsedeadlineDp="ngbDatepicker" formControlName="responsedeadline"/>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="responsedeadlineDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_naicscode">Naicscode</label>
+                    <input type="text" class="form-control" name="naicscode" id="field_naicscode"
+                           formControlName="naicscode"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_classificationcode">Classificationcode</label>
+                    <input type="text" class="form-control" name="classificationcode" id="field_classificationcode"
+                           formControlName="classificationcode"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_popstate">Popstate</label>
+                    <input type="text" class="form-control" name="popstate" id="field_popstate"
+                           formControlName="popstate"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_popzip">Popzip</label>
+                    <input type="text" class="form-control" name="popzip" id="field_popzip"
+                           formControlName="popzip"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_popcountry">Popcountry</label>
+                    <input type="text" class="form-control" name="popcountry" id="field_popcountry"
+                           formControlName="popcountry"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_active">Active</label>
+                    <input type="text" class="form-control" name="active" id="field_active"
+                           formControlName="active"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_organizationtype">Organizationtype</label>
+                    <input type="text" class="form-control" name="organizationtype" id="field_organizationtype"
+                           formControlName="organizationtype"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_description">Description</label>
+                    <textarea class="form-control" name="description" id="field_description"
+                              formControlName="description"></textarea>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

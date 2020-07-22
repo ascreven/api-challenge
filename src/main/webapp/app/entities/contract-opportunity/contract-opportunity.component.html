@@ -1,0 +1,99 @@
+<div>
+    <h2 id="page-heading">
+        <span>Contract Opportunities</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-contract-opportunity" [routerLink]="['/contract-opportunity/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span>
+            Create a new Contract Opportunity
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="contractOpportunities?.length === 0">
+        <span>No contractOpportunities found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="contractOpportunities && contractOpportunities.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr>
+                    <th scope="col" ><span>ID</span></th>
+                    <th scope="col" ><span>Contract Id</span></th>
+                    <th scope="col" ><span>Title</span></th>
+                    <th scope="col" ><span>Sol</span></th>
+                    <th scope="col" ><span>Agency</span></th>
+                    <th scope="col" ><span>Sub Tier</span></th>
+                    <th scope="col" ><span>Office</span></th>
+                    <th scope="col" ><span>Posteddate</span></th>
+                    <th scope="col" ><span>Type</span></th>
+                    <th scope="col" ><span>Basetype</span></th>
+                    <th scope="col" ><span>Setasidecode</span></th>
+                    <th scope="col" ><span>Setaside</span></th>
+                    <th scope="col" ><span>Responsedeadline</span></th>
+                    <th scope="col" ><span>Naicscode</span></th>
+                    <th scope="col" ><span>Classificationcode</span></th>
+                    <th scope="col" ><span>Popstate</span></th>
+                    <th scope="col" ><span>Popzip</span></th>
+                    <th scope="col" ><span>Popcountry</span></th>
+                    <th scope="col" ><span>Active</span></th>
+                    <th scope="col" ><span>Organizationtype</span></th>
+                    <th scope="col" ><span>Description</span></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let contractOpportunity of contractOpportunities ;trackBy: trackId">
+                    <td><a [routerLink]="['/contract-opportunity', contractOpportunity.id, 'view']">{{ contractOpportunity.id }}</a></td>
+                    <td>{{ contractOpportunity.contractId }}</td>
+                    <td>{{ contractOpportunity.title }}</td>
+                    <td>{{ contractOpportunity.sol }}</td>
+                    <td>{{ contractOpportunity.agency }}</td>
+                    <td>{{ contractOpportunity.subTier }}</td>
+                    <td>{{ contractOpportunity.office }}</td>
+                    <td>{{ contractOpportunity.posteddate | date:'mediumDate' }}</td>
+                    <td>{{ contractOpportunity.type }}</td>
+                    <td>{{ contractOpportunity.basetype }}</td>
+                    <td>{{ contractOpportunity.setasidecode }}</td>
+                    <td>{{ contractOpportunity.setaside }}</td>
+                    <td>{{ contractOpportunity.responsedeadline | date:'mediumDate' }}</td>
+                    <td>{{ contractOpportunity.naicscode }}</td>
+                    <td>{{ contractOpportunity.classificationcode }}</td>
+                    <td>{{ contractOpportunity.popstate }}</td>
+                    <td>{{ contractOpportunity.popzip }}</td>
+                    <td>{{ contractOpportunity.popcountry }}</td>
+                    <td>{{ contractOpportunity.active }}</td>
+                    <td>{{ contractOpportunity.organizationtype }}</td>
+                    <td>{{ contractOpportunity.description }}</td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/contract-opportunity', contractOpportunity.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/contract-opportunity', contractOpportunity.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(contractOpportunity)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

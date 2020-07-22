@@ -160,7 +160,7 @@ liquibase {
     activities {
         main {
             driver "org.postgresql.Driver"
-            url "jdbc:postgresql://localhost:5432/Opportunities"
+            url "jdbc:postgresql://localhost:5432/sandbox"
             username "Opportunities"
             password ""
             changeLogFile "src/main/resources/config/liquibase/master.xml"
@@ -170,9 +170,9 @@ liquibase {
         }
         diffLog {
             driver "org.postgresql.Driver"
-            url "jdbc:postgresql://localhost:5432/Opportunities"
-            username "Opportunities"
-            password ""
+            url "jdbc:postgresql://localhost:5432/sandbox"
+            username "sandbox"
+            password "sandbox"
             changeLogFile project.ext.diffChangelogFile
             referenceUrl "hibernate:spring:com.mycompany.myapp.domain?dialect=io.github.jhipster.domain.util.FixedPostgreSQL10Dialect&hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy"
             defaultSchemaName ""

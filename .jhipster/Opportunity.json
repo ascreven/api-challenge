@@ -1,0 +1,102 @@
+{
+  "name": "Opportunity",
+  "fields": [
+    {
+      "fieldName": "contractId",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "title",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "maxlength"
+      ],
+      "fieldValidateRulesMaxlength": "1024"
+    },
+    {
+      "fieldName": "sol",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "agency",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "subTier",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "office",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "posteddate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "type",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "basetype",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "setasidecode",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "setaside",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "responsedeadline",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "naicscode",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "classificationcode",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "popstate",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "popzip",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "popcountry",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "active",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "organizationtype",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    }
+  ],
+  "relationships": [],
+  "changelogDate": "20200722181146",
+  "entityTableName": "opportunity",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

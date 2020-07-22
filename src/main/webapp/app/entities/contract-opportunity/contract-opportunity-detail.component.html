@@ -1,0 +1,106 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="contractOpportunity">
+            <h2><span>Contract Opportunity</span> {{ contractOpportunity.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span>Contract Id</span></dt>
+                <dd>
+                    <span>{{ contractOpportunity.contractId }}</span>
+                </dd>
+                <dt><span>Title</span></dt>
+                <dd>
+                    <span>{{ contractOpportunity.title }}</span>
+                </dd>
+                <dt><span>Sol</span></dt>
+                <dd>
+                    <span>{{ contractOpportunity.sol }}</span>
+                </dd>
+                <dt><span>Agency</span></dt>
+                <dd>
+                    <span>{{ contractOpportunity.agency }}</span>
+                </dd>
+                <dt><span>Sub Tier</span></dt>
+                <dd>
+                    <span>{{ contractOpportunity.subTier }}</span>
+                </dd>
+                <dt><span>Office</span></dt>
+                <dd>
+                    <span>{{ contractOpportunity.office }}</span>
+                </dd>
+                <dt><span>Posteddate</span></dt>
+                <dd>
+                    <span>{{ contractOpportunity.posteddate }}</span>
+                </dd>
+                <dt><span>Type</span></dt>
+                <dd>
+                    <span>{{ contractOpportunity.type }}</span>
+                </dd>
+                <dt><span>Basetype</span></dt>
+                <dd>
+                    <span>{{ contractOpportunity.basetype }}</span>
+                </dd>
+                <dt><span>Setasidecode</span></dt>
+                <dd>
+                    <span>{{ contractOpportunity.setasidecode }}</span>
+                </dd>
+                <dt><span>Setaside</span></dt>
+                <dd>
+                    <span>{{ contractOpportunity.setaside }}</span>
+                </dd>
+                <dt><span>Responsedeadline</span></dt>
+                <dd>
+                    <span>{{ contractOpportunity.responsedeadline }}</span>
+                </dd>
+                <dt><span>Naicscode</span></dt>
+                <dd>
+                    <span>{{ contractOpportunity.naicscode }}</span>
+                </dd>
+                <dt><span>Classificationcode</span></dt>
+                <dd>
+                    <span>{{ contractOpportunity.classificationcode }}</span>
+                </dd>
+                <dt><span>Popstate</span></dt>
+                <dd>
+                    <span>{{ contractOpportunity.popstate }}</span>
+                </dd>
+                <dt><span>Popzip</span></dt>
+                <dd>
+                    <span>{{ contractOpportunity.popzip }}</span>
+                </dd>
+                <dt><span>Popcountry</span></dt>
+                <dd>
+                    <span>{{ contractOpportunity.popcountry }}</span>
+                </dd>
+                <dt><span>Active</span></dt>
+                <dd>
+                    <span>{{ contractOpportunity.active }}</span>
+                </dd>
+                <dt><span>Organizationtype</span></dt>
+                <dd>
+                    <span>{{ contractOpportunity.organizationtype }}</span>
+                </dd>
+                <dt><span>Description</span></dt>
+                <dd>
+                    <span>{{ contractOpportunity.description }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/contract-opportunity', contractOpportunity.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+            </button>
+        </div>
+    </div>
+</div>
