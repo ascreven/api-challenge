@@ -20,6 +20,7 @@ import com.mycompany.myapp.domain.*; // for static metamodels
 import com.mycompany.myapp.repository.ContractOpportunityRepository;
 import com.mycompany.myapp.service.dto.ContractOpportunityCriteria;
 import com.mycompany.myapp.service.dto.IndustryOppCountDTO;
+import com.mycompany.myapp.service.dto.IndustryOppCountCriteria;
 
 /**
  * Service for executing complex queries for {@link ContractOpportunity} entities in the database.
@@ -77,7 +78,7 @@ public class ContractOpportunityQueryService extends QueryService<ContractOpport
     }
 
     @Transactional(readOnly = true)
-    public List<IndustryOppCountDTO> countIndustryOpportunities() {
+    public List<IndustryOppCountDTO> countIndustryOpportunities(IndustryOppCountCriteria criteria) {
         log.debug("REST request to count ContractOpportunities by industry");
 
         IndustryOppCountDTO count = new IndustryOppCountDTO();
