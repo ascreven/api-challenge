@@ -1,5 +1,4 @@
 @readOnly
-@dto(mapstruct)
 @service(serviceClass)
 entity ContractOpportunity {
     contractId String
@@ -25,3 +24,4 @@ entity ContractOpportunity {
 }
 
 paginate * with pagination
+filter ContractOpportunity

@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface ContractOpportunityRepository extends JpaRepository<ContractOpportunity, Long> {
+public interface ContractOpportunityRepository extends JpaRepository<ContractOpportunity, Long>, JpaSpecificationExecutor<ContractOpportunity> {
 }

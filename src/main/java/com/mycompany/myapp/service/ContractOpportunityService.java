@@ -2,8 +2,6 @@ package com.mycompany.myapp.service;
 
 import com.mycompany.myapp.domain.ContractOpportunity;
 import com.mycompany.myapp.repository.ContractOpportunityRepository;
-import com.mycompany.myapp.service.dto.ContractOpportunityDTO;
-import com.mycompany.myapp.service.mapper.ContractOpportunityMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,24 +23,19 @@ public class ContractOpportunityService {
 
     private final ContractOpportunityRepository contractOpportunityRepository;
 
-    private final ContractOpportunityMapper contractOpportunityMapper;
-
-    public ContractOpportunityService(ContractOpportunityRepository contractOpportunityRepository, ContractOpportunityMapper contractOpportunityMapper) {
+    public ContractOpportunityService(ContractOpportunityRepository contractOpportunityRepository) {
         this.contractOpportunityRepository = contractOpportunityRepository;
-        this.contractOpportunityMapper = contractOpportunityMapper;
     }
 
     /**
      * Save a contractOpportunity.
      *
-     * @param contractOpportunityDTO the entity to save.
+     * @param contractOpportunity the entity to save.
      * @return the persisted entity.
      */
-    public ContractOpportunityDTO save(ContractOpportunityDTO contractOpportunityDTO) {
-        log.debug("Request to save ContractOpportunity : {}", contractOpportunityDTO);
-        ContractOpportunity contractOpportunity = contractOpportunityMapper.toEntity(contractOpportunityDTO);
-        contractOpportunity = contractOpportunityRepository.save(contractOpportunity);
-        return contractOpportunityMapper.toDto(contractOpportunity);
+    public ContractOpportunity save(ContractOpportunity contractOpportunity) {
+        log.debug("Request to save ContractOpportunity : {}", contractOpportunity);
+        return contractOpportunityRepository.save(contractOpportunity);
     }
 
     /**
@@ -52,10 +45,9 @@ public class ContractOpportunityService {
      * @return the list of entities.
      */
     @Transactional(readOnly = true)
-    public Page<ContractOpportunityDTO> findAll(Pageable pageable) {
+    public Page<ContractOpportunity> findAll(Pageable pageable) {
         log.debug("Request to get all ContractOpportunities");
-        return contractOpportunityRepository.findAll(pageable)
-            .map(contractOpportunityMapper::toDto);
+        return contractOpportunityRepository.findAll(pageable);
     }
 
 
@@ -66,10 +58,9 @@ public class ContractOpportunityService {
      * @return the entity.
      */
     @Transactional(readOnly = true)
-    public Optional<ContractOpportunityDTO> findOne(Long id) {
+    public Optional<ContractOpportunity> findOne(Long id) {
         log.debug("Request to get ContractOpportunity : {}", id);
-        return contractOpportunityRepository.findById(id)
-            .map(contractOpportunityMapper::toDto);
+        return contractOpportunityRepository.findById(id);
     }
 
     /**
