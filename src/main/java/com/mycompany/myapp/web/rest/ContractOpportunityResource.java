@@ -25,6 +25,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Optional;
 
 /**
@@ -79,14 +80,25 @@ public class ContractOpportunityResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
      */
     @GetMapping("/contract-opportunities/industry_opp_counts")
-    public ResponseEntity<IndustryOppCountDTO> countIndustryOpportunities() {
+    public ResponseEntity<List<IndustryOppCountDTO>> countIndustryOpportunities() {
         log.debug("REST request to count ContractOpportunities by industry");
+
         IndustryOppCountDTO count = new IndustryOppCountDTO();
         count.setOppCount(new Long(5342));
         count.setNaicsCode("840239");
         count.setTitle("My Fantastic Title");
-        return ResponseEntity.ok().body(count);
+
+        IndustryOppCountDTO next = new IndustryOppCountDTO();
+        next.setOppCount(new Long(1612));
+        next.setNaicsCode("854938");
+        next.setTitle("My Superb Title");
+
+        ArrayList<IndustryOppCountDTO> result = new ArrayList<IndustryOppCountDTO>();
+        result.add(count);
+        result.add(next);
+        return ResponseEntity.ok().body(result);
     }
+
 
     /**
      * {@code GET  /contract-opportunities/:id} : get the "id" contractOpportunity.
