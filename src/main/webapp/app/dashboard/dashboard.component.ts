@@ -17,6 +17,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   account: Account | null = null;
   authSubscription?: Subscription;
   industryCounts: IIndustryOpportunityCount[] = [];
+  message: String = 'Please wait while we gather frequently used NCAIS codes.';
 
   keywords: String[] = [];
   dashboardForm = new FormGroup({
@@ -37,9 +38,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   getIndustryOpportunityCount(industryOppParams = {}): void {
-    this.contractOpportunityService
-      .countIndustryOpps(industryOppParams)
-      .subscribe((res: IIndustryOpportunityCount[]) => (this.industryCounts = res));
+    this.message = 'Please wait while we gather frequently used NCAIS codes.';
+    this.contractOpportunityService.countIndustryOpps(industryOppParams).subscribe((res: IIndustryOpportunityCount[]) => {
+      this.industryCounts = res;
+      this.message = res.length === 0 ? 'No NCAIS codes matched your filters.' : '';
+    });
   }
 
   isAuthenticated(): boolean {
