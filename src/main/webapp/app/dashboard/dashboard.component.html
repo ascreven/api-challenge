@@ -1,0 +1,38 @@
+<form class="usa-form usa-form--large desktop:margin-left-9" [formGroup]="dashboardForm" (ngSubmit)="onSubmit()">
+    <fieldset class="usa-fieldset">
+        <legend class="usa-legend">NAICS Dashboard</legend>
+        <label class="usa-label">Parent Code
+            <input class="usa-input" type="text" formControlName="parentcode">
+        </label>
+        <div formArrayName="keywords">
+            <div *ngFor="let keyword of keywords.controls; let i=index">
+                <label class="usa-label" for="keyword-{{i}}">Keywords</label>
+                <input class="usa-input" id="keyword-{{i}}" [formControlName]="i">
+                <button class="usa-button usa-button--small usa-button--base" (click)="addKeyword()" type="button">Add
+                    Keyword</button>
+            </div>
+        </div>
+        <label class="usa-label">Set Asides
+            <input class="usa-input" type="text" formControlName="setaside"></label>
+    </fieldset>
+    <button class="usa-button usa-button--outline margin-y-3 justify-content-center" type="submit">Search</button>
+</form>
+<div class="grid-row">
+    <table class="sds-table grid-col-fill">
+        <caption class="sr-only">NCAIS Codes</caption>
+        <thead class="sds-table__head">
+            <tr>
+                <th scope="col">Code</th>
+                <th scope="col">Industry</th>
+                <th scope="col">Contract Opportunities</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let industryCount of industryCounts">
+                <td>{{industryCount.naicsCode}}</td>
+                <td>{{industryCount.title}}</td>
+                <td>{{industryCount.oppCount}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
