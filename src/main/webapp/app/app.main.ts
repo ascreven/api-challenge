@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/tslint/config */
 import './polyfills';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { ProdConfig } from './blocks/config/prod.config';
