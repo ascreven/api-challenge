@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { LoginModalService } from 'app/core/login/login-modal.service';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
+import { ContractOpportunityService } from 'app/entities/contract-opportunity/contract-opportunity.service';
 
 @Component({
   selector: 'jhi-home',
@@ -13,11 +14,20 @@ import { Account } from 'app/core/user/account.model';
 export class HomeComponent implements OnInit, OnDestroy {
   account: Account | null = null;
   authSubscription?: Subscription;
+  industryCounts: any;
 
-  constructor(private accountService: AccountService, private loginModalService: LoginModalService) {}
+  constructor(private accountService: AccountService,
+    private contractOpportunityService: ContractOpportunityService,
+    private loginModalService: LoginModalService) {}
 
   ngOnInit(): void {
     this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => (this.account = account));
+    const industryOppParams = {
+      'parentCode.equal': '2362',
+      'keywords.in': ["video", "training"],
+      'setAside.equal': "sba"
+    }
+    this.contractOpportunityService.countIndustryOpps(industryOppParams).subscribe(res => this.industryCounts = res);
   }
 
   isAuthenticated(): boolean {
