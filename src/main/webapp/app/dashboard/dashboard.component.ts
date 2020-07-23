@@ -7,7 +7,6 @@ import { ContractOpportunityService } from 'app/entities/contract-opportunity/co
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
 import { IIndustryOpportunityCount } from 'app/shared/model/industry-opportunity-count.model';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'jhi-dashboard',
@@ -30,8 +29,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   constructor(
     private accountService: AccountService,
     private contractOpportunityService: ContractOpportunityService,
-    private loginModalService: LoginModalService,
-    private router: Router
+    private loginModalService: LoginModalService
   ) {}
 
   ngOnInit(): void {
