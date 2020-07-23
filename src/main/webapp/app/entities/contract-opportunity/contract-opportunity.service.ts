@@ -8,6 +8,7 @@ import { DATE_FORMAT } from 'app/shared/constants/input.constants';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { IContractOpportunity } from 'app/shared/model/contract-opportunity.model';
+import { IIndustryOpportunityCount } from 'app/shared/model/industry-opportunity-count.model';
 
 type EntityResponseType = HttpResponse<IContractOpportunity>;
 type EntityArrayResponseType = HttpResponse<IContractOpportunity[]>;
@@ -29,6 +30,16 @@ export class ContractOpportunityService {
     return this.http
       .get<IContractOpportunity[]>(this.resourceUrl, { params: options, observe: 'response' })
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+
+  countIndustryOpps(industryOppParams?: any): Observable<IIndustryOpportunityCount[]> {
+    return this.http
+      .get<IIndustryOpportunityCount[]>(this.resourceUrl + '/industry_opp_counts', { params: industryOppParams })
+      .pipe(
+        map(res => {
+          return res;
+        })
+      );
   }
 
   protected convertDateFromClient(contractOpportunity: IContractOpportunity): IContractOpportunity {

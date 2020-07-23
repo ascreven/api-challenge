@@ -1,152 +1,47 @@
-<div class="grid-container">
-    <div class="grid-row">
-        <form class="usa-form usa-form--large desktop:margin-left-9">
+<div class="grid-row">
+    <div class="grid-col-12">
+        <form [formGroup]="dashboardForm" (ngSubmit)="onSubmit()">
             <fieldset class="usa-fieldset">
                 <legend class="usa-legend">NAICS Dashboard</legend>
-                <label class="usa-label" for="title">Keyword</label>
-                <input class="usa-input" id="title" name="title" type="text" placeholder="Transportation">
+                <label class="usa-label">Parent Code
+                    <input class="usa-input" type="text" formControlName="parentCode">
+                </label>
 
-                <label class="usa-label" for="first-name">Set Asides</label>
-                <input class="usa-input" id="first-name" name="first-name" type="text" required aria-required="true" placeholder="SBA">
+                <div class="usa-form-group">
+                    <label class="usa-label ng-star-inserted" for="keyword">Keywords</label>
+                    <div>
+                        <input class="usa-input display-inline-block" formControlName="keyword" id="keyword" placeholder="Keyword">
+                        <button class="usa-button margin-left-05 display-inline-block" type="button" (click)="addKeyword()">+ Keyword</button>
+                    </div>
+                    <span  *ngFor="let keyword of keywords; index as i" class="usa-tag">{{keyword}}
+                        <button class="usa-button--unstyled text-light" (click)="removeKeyword(i)">(x)</button>
+                    </span>
+                </div>
+
+                <label class="usa-label">Set Asides
+                    <input class="usa-input" type="text" formControlName="setAside"></label>
             </fieldset>
-            <button class="usa-button usa-button--outline margin-y-3 justify-content-center" type="submit">Search</button>
+            <button class="usa-button usa-button--outline margin-y-3 justify-content-center"
+                type="submit">Search</button>
         </form>
     </div>
-    <div class="grid-row">
-        <table class="sds-table grid-col-fill">
-            <thead class="sds-table__head">
-                <tr>
-                    <th scope="col">Code</th>
-                    <th scope="col">Industry</th>
-                    <th scope="col">Contract Opportunities</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>12345</td>
-
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12346</td>
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12347</td>
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12348</td>
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12349</td>
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12350</td>
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12345</td>
-
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12346</td>
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12347</td>
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12348</td>
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12349</td>
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12350</td>
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12345</td>
-
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12346</td>
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12347</td>
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12348</td>
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12349</td>
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12350</td>
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12345</td>
-
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12346</td>
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12347</td>
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12348</td>
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12349</td>
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12350</td>
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+</div>
+<div class="grid-row">
+    <table class="sds-table grid-col-fill">
+        <caption class="sr-only">NCAIS Codes</caption>
+        <thead class="sds-table__head">
+            <tr>
+                <th scope="col">Code</th>
+                <th scope="col">Industry</th>
+                <th scope="col">Contract Opportunities</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let industryCount of industryCounts">
+                <td>{{industryCount.code}}</td>
+                <td>{{industryCount.title}}</td>
+                <td>{{industryCount.opportunities}}</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
