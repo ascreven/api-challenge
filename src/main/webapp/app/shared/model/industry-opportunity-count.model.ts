@@ -1,5 +1,5 @@
 export interface IIndustryOpportunityCount {
-  naicsCode?: string;
+  code?: string;
   title?: string;
-  oppCount?: number;
+  opportunities?: number;
 }
