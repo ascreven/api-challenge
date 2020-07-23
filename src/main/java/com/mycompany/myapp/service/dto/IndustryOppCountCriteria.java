@@ -19,6 +19,8 @@ public class IndustryOppCountCriteria implements Serializable, Criteria {
 
     private StringFilter keywords;
 
+    private StringFilter code;
+
     public IndustryOppCountCriteria() {
     }
 
@@ -26,6 +28,7 @@ public class IndustryOppCountCriteria implements Serializable, Criteria {
         this.parentCode = other.parentCode == null ? null : other.parentCode.copy();
         this.setAside = other.setAside == null ? null : other.setAside.copy();
         this.keywords = other.keywords == null ? null : other.keywords.copy();
+        this.code = other.code == null ? null : other.code.copy();
     }
 
     @Override
@@ -57,6 +60,13 @@ public class IndustryOppCountCriteria implements Serializable, Criteria {
         this.keywords = keywords;
     }
 
+    public StringFilter getCode() {
+        return code;
+    }
+
+    public void setCode(StringFilter code) {
+        this.code = code;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -88,6 +98,7 @@ public class IndustryOppCountCriteria implements Serializable, Criteria {
                 (parentCode != null ? "parentCode=" + parentCode + ", " : "") +
                 (setAside != null ? "setAside=" + setAside + ", " : "") +
                 (keywords != null ? "keywords=" + keywords + ", " : "") +
+                (code != null ? "code=" + code + ", " : "") +
             "}";
     }
 
