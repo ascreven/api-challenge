@@ -36,11 +36,16 @@
                 <th scope="col">Contract Opportunities</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody *ngIf="industryCounts.length > 0">
             <tr *ngFor="let industryCount of industryCounts">
                 <td>{{industryCount.code}}</td>
                 <td>{{industryCount.title}}</td>
                 <td>{{industryCount.opportunities}}</td>
+            </tr>
+        </tbody>
+        <tbody *ngIf="industryCounts.length == 0">
+            <tr>
+                <td colspan="3">{{message}}</td>
             </tr>
         </tbody>
     </table>
