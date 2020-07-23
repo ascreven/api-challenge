@@ -13,7 +13,6 @@ import { NavbarComponent } from './layouts/navbar/navbar.component';
 import { FooterComponent } from './layouts/footer/footer.component';
 import { PageRibbonComponent } from './layouts/profiles/page-ribbon.component';
 import { ErrorComponent } from './layouts/error/error.component';
-import { BarchartComponent } from './barchart/barchart.component';
 
 @NgModule({
   imports: [
@@ -25,7 +24,7 @@ import { BarchartComponent } from './barchart/barchart.component';
     OpportunitiesEntityModule,
     OpportunitiesAppRoutingModule,
   ],
-  declarations: [MainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent, BarchartComponent],
+  declarations: [MainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent],
   bootstrap: [MainComponent],
 })
 export class OpportunitiesAppModule {}
