@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { FormBuilder, FormArray } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 
 import { LoginModalService } from 'app/core/login/login-modal.service';
 import { ContractOpportunityService } from 'app/entities/contract-opportunity/contract-opportunity.service';
@@ -17,24 +17,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
   account: Account | null = null;
   authSubscription?: Subscription;
   industryCounts: IIndustryOpportunityCount[] = [];
-  industryCountSubscription?: Subscription;
 
-  dashboardForm = this.fb.group({
-    parentcode: [],
-    keywords: this.fb.array([
-      this.fb.control('')
-    ]),
-    setaside: []
+  keywords: String[] = [];
+  dashboardForm = new FormGroup({
+    parentCode: new FormControl(''),
+    keyword: new FormControl(''),
+    setAside: new FormControl('')
   });
-
-  get keywords(): any {
-    return this.dashboardForm.get('keywords') as FormArray;
-  }
 
   constructor(
     private accountService: AccountService,
     private contractOpportunityService: ContractOpportunityService,
-    private fb: FormBuilder,
     private loginModalService: LoginModalService
   ) {}
 
@@ -44,7 +37,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   getIndustryOpportunityCount(industryOppParams = {}): void {
-    this.industryCountSubscription = this.contractOpportunityService
+    this.contractOpportunityService
       .countIndustryOpps(industryOppParams)
       .subscribe((res: IIndustryOpportunityCount[]) => (this.industryCounts = res));
   }
@@ -58,15 +51,27 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   addKeyword(): void {
-    this.keywords.push(this.fb.control(''));
+    this.keywords.push(this.dashboardForm.value.keyword);
+    this.dashboardForm.controls.keyword.reset();
+  }
+
+  removeKeyword(index: number): void {
+    this.keywords.splice(index);
   }
 
   onSubmit(): void {
-    const industryOppParams = {
-      'keywords.in': this.keywords.value,
-      'setaside.equal': this.dashboardForm.value.setaside,
-      'parentcode.equal': this.dashboardForm.value.parentcode
-    };
+    const filters = this.dashboardForm.value;
+
+    const industryOppParams = {};
+    if (this.keywords.length) {
+      industryOppParams['keywords.in'] = this.keywords;
+    }
+    if (filters.setAside) {
+      industryOppParams['setAside.equals'] = filters.setAside;
+    }
+    if (filters.parentCode) {
+      industryOppParams['parentCode.equals'] = filters.parentCode;
+    }
     this.getIndustryOpportunityCount(industryOppParams);
   }
 
