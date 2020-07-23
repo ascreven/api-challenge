@@ -9,6 +9,10 @@ import { RouterModule } from '@angular/router';
         loadChildren: () =>
           import('./contract-opportunity/contract-opportunity.module').then(m => m.OpportunitiesContractOpportunityModule),
       },
+      {
+        path: 'naics',
+        loadChildren: () => import('./naics/naics.module').then(m => m.OpportunitiesNaicsModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],

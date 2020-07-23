@@ -5,6 +5,7 @@ import com.mycompany.myapp.service.ContractOpportunityService;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
 import com.mycompany.myapp.service.dto.ContractOpportunityCriteria;
 import com.mycompany.myapp.service.dto.IndustryOppCountDTO;
+import com.mycompany.myapp.service.dto.IndustryOppCountCriteria;
 import com.mycompany.myapp.service.ContractOpportunityQueryService;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -80,23 +81,9 @@ public class ContractOpportunityResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
      */
     @GetMapping("/contract-opportunities/industry_opp_counts")
-    public ResponseEntity<List<IndustryOppCountDTO>> countIndustryOpportunities() {
+    public ResponseEntity<List<IndustryOppCountDTO>> countIndustryOpportunities(IndustryOppCountCriteria criteria) {
         log.debug("REST request to count ContractOpportunities by industry");
-
-        IndustryOppCountDTO count = new IndustryOppCountDTO();
-        count.setOppCount(new Long(5342));
-        count.setNaicsCode("840239");
-        count.setTitle("My Fantastic Title");
-
-        IndustryOppCountDTO next = new IndustryOppCountDTO();
-        next.setOppCount(new Long(1612));
-        next.setNaicsCode("854938");
-        next.setTitle("My Superb Title");
-
-        ArrayList<IndustryOppCountDTO> result = new ArrayList<IndustryOppCountDTO>();
-        result.add(count);
-        result.add(next);
-        return ResponseEntity.ok().body(result);
+        return ResponseEntity.ok().body(contractOpportunityQueryService.countIndustryOpportunities(criteria));
     }
 
 
