@@ -7,6 +7,7 @@ import { ContractOpportunityService } from 'app/entities/contract-opportunity/co
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
 import { IIndustryOpportunityCount } from 'app/shared/model/industry-opportunity-count.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'jhi-dashboard',
@@ -16,7 +17,7 @@ import { IIndustryOpportunityCount } from 'app/shared/model/industry-opportunity
 export class DashboardComponent implements OnInit, OnDestroy {
   account: Account | null = null;
   authSubscription?: Subscription;
-  industryCounts: IIndustryOpportunityCount[] = [];
+  industryCounts: any[] = [];
   message: String = "Please wait while we gather frequently used NCAIS codes.";
   keywords: String[] = [];
 
@@ -29,7 +30,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   constructor(
     private accountService: AccountService,
     private contractOpportunityService: ContractOpportunityService,
-    private loginModalService: LoginModalService
+    private loginModalService: LoginModalService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -52,6 +54,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
     return this.accountService.isAuthenticated();
   }
 
+  viewDetails(code: any): void {
+    this.dashboardForm.controls.parentCode.setValue(code);
+    this.searchOpportunities();
+  }
+
   login(): void {
     this.loginModalService.open();
   }
@@ -70,7 +77,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.keywords.splice(index);
   }
 
-  onSubmit(): void {
+  searchOpportunities(): void {
     const filters = this.dashboardForm.value;
 
     const industryOppParams = {};
