@@ -7,3 +7,4 @@
         <button class="usa-button usa-button--secondary" [routerLink]="['directory']">Get Started</button>
     </div>
 </div>
+<app-barchart *ngIf="chartData" [data]="chartData"></app-barchart>
