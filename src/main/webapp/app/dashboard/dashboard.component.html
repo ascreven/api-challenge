@@ -1,52 +1,69 @@
 <div class="grid-row">
     <div class="grid-col-12">
-        <form [formGroup]="dashboardForm" (ngSubmit)="onSubmit()">
+        <form [formGroup]="dashboardForm" (ngSubmit)="searchOpportunities()">
             <fieldset class="usa-fieldset">
                 <legend class="usa-legend">NAICS Dashboard</legend>
-                <label class="usa-label">Parent Code
-                    <input class="usa-input" type="text" formControlName="parentCode">
-                </label>
+
+                <label class="usa-label" for="parentcode">Parent Code</label>
+                <input class="usa-input" type="text" id="parentcode" placeholder="Parent Code"
+                    formControlName="parentCode">
 
                 <div class="usa-form-group">
                     <label class="usa-label ng-star-inserted" for="keyword">Keywords</label>
                     <div>
-                        <input class="usa-input display-inline-block" formControlName="keyword" id="keyword" placeholder="Keyword">
-                        <button class="usa-button margin-left-05 display-inline-block" type="button" (click)="addKeyword()">+ Keyword</button>
+                        <input class="usa-input display-inline-block" formControlName="keyword" id="keyword"
+                            placeholder="Keyword">
+                        <button
+                            class="usa-button usa-button--outline tablet:margin-left-05 tablet:margin-top-0 margin-top-2 display-inline-block"
+                            type="button" (click)="addKeyword()">+ Keyword</button>
                     </div>
-                    <span  *ngFor="let keyword of keywords; index as i" class="usa-tag">{{keyword}}
+                    <span *ngFor="let keyword of keywords; index as i" class="usa-tag">{{keyword}}
                         <button class="usa-button--unstyled text-light" (click)="removeKeyword(i)">(x)</button>
                     </span>
                 </div>
 
-                <label class="usa-label">Set Asides
-                    <input class="usa-input" type="text" formControlName="setAside"></label>
+                <label class="usa-label" for="setaside">Set Asides</label>
+                <input class="usa-input" type="text" id="setaside" placeholder="Set Asides"
+                    formControlName="setAside" />
+
+                <button class="usa-button margin-top-2" type="submit">Search</button>
+                <button class="usa-button usa-button--base margin-top-2" (click)="resetForm()"
+                    type="button">Reset</button>
             </fieldset>
-            <button class="usa-button usa-button--outline margin-y-3 justify-content-center"
-                type="submit">Search</button>
         </form>
     </div>
 </div>
-<div class="grid-row">
-    <table class="sds-table grid-col-fill">
-        <caption class="sr-only">NCAIS Codes</caption>
-        <thead class="sds-table__head">
-            <tr>
-                <th scope="col">Code</th>
-                <th scope="col">Industry</th>
-                <th scope="col">Contract Opportunities</th>
-            </tr>
-        </thead>
-        <tbody *ngIf="industryCounts.length > 0">
-            <tr *ngFor="let industryCount of industryCounts">
-                <td>{{industryCount.code}}</td>
-                <td>{{industryCount.title}}</td>
-                <td>{{industryCount.opportunities}}</td>
-            </tr>
-        </tbody>
-        <tbody *ngIf="industryCounts.length == 0">
-            <tr>
-                <td colspan="3">{{message}}</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+
+<hr>
+
+<table class="sds-table">
+    <caption class="sr-only">NCAIS Codes</caption>
+    <thead class="sds-table__head">
+        <tr>
+            <th scope="col">Code</th>
+            <th scope="col">Industry</th>
+            <th scope="col">Contract Opportunities</th>
+            <th scope="col" *ngIf="!industryCounts[0] || industryCounts[0].code.length < 5">Actions</th>
+        </tr>
+    </thead>
+    <tbody *ngIf="industryCounts.length > 0">
+        <tr *ngFor="let industryCount of industryCounts; index as i">
+            <td>{{industryCount.code}}</td>
+            <td>{{industryCount.title | formatTitle}}</td>
+            <td>{{industryCount.opportunities}}</td>
+            <td *ngIf="industryCounts[0].code.length < 5">
+                <div class="btn-group">
+                    <button type="button" (click)="viewDetails(industryCount.code)" class="btn btn-info btn-sm">
+                        <span>More Info</span>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+    <tbody *ngIf="industryCounts.length === 0">
+        <tr>
+            <td *ngIf="!industryCounts[0] || industryCounts[0].code.length < 5" colspan="4">{{message}}</td>
+            <td *ngIf="industryCounts.length != 0 && industryCounts[0].code.length > 5" colspan="3">{{message}}</td>
+        </tr>
+    </tbody>
+</table>

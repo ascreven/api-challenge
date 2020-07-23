@@ -16,10 +16,10 @@ import { IIndustryOpportunityCount } from 'app/shared/model/industry-opportunity
 export class DashboardComponent implements OnInit, OnDestroy {
   account: Account | null = null;
   authSubscription?: Subscription;
-  industryCounts: IIndustryOpportunityCount[] = [];
+  industryCounts: any[] = [];
   message: String = 'Please wait while we gather frequently used NCAIS codes.';
-
   keywords: String[] = [];
+
   dashboardForm = new FormGroup({
     parentCode: new FormControl(''),
     keyword: new FormControl(''),
@@ -39,6 +39,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   getIndustryOpportunityCount(industryOppParams = {}): void {
     this.message = 'Please wait while we gather frequently used NCAIS codes.';
+    this.industryCounts = [];
     this.contractOpportunityService.countIndustryOpps(industryOppParams).subscribe((res: IIndustryOpportunityCount[]) => {
       this.industryCounts = res;
       this.message = res.length === 0 ? 'No NCAIS codes matched your filters.' : '';
@@ -47,6 +48,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   isAuthenticated(): boolean {
     return this.accountService.isAuthenticated();
+  }
+
+  viewDetails(code: any): void {
+    this.dashboardForm.controls.parentCode.setValue(code);
+    this.searchOpportunities();
   }
 
   login(): void {
@@ -58,11 +64,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.dashboardForm.controls.keyword.reset();
   }
 
+  resetForm(): void {
+    this.keywords = [];
+    this.dashboardForm.reset();
+  }
+
   removeKeyword(index: number): void {
     this.keywords.splice(index);
   }
 
-  onSubmit(): void {
+  searchOpportunities(): void {
     const filters = this.dashboardForm.value;
 
     const industryOppParams = {};
