@@ -3,7 +3,7 @@ package com.mycompany.myapp.service.dto;
 import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
-import javax.persistence.Lob;
+import javax.persistence.*;
 
 /**
  * A DTO for the {@link com.mycompany.myapp.domain.ContractOpportunity} entity.
