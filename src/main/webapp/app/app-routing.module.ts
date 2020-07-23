@@ -27,11 +27,11 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
         },
         {
           path: 'directory',
-          loadChildren: () => import('./directory/directory.module').then(m => m.SandboxDirectoryModule),
+          loadChildren: () => import('./directory/directory.module').then(m => m.DirectoryModule),
         },
         {
           path: 'dashboard',
-          loadChildren: () => import('./dashboard/dashboard.module').then(m => m.SandboxDashboardModule),
+          loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
         },
         ...LAYOUT_ROUTES,
       ],
@@ -40,4 +40,4 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
   ],
   exports: [RouterModule],
 })
-export class SandboxAppRoutingModule {}
+export class OpportunitiesAppRoutingModule {}
