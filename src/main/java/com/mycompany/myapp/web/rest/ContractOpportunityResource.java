@@ -6,6 +6,7 @@ import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
 import com.mycompany.myapp.service.dto.ContractOpportunityCriteria;
 import com.mycompany.myapp.domain.IndustryOppCount;
 import com.mycompany.myapp.service.dto.IndustryOppCountCriteria;
+import com.mycompany.myapp.service.dto.NaicsCriteria;
 import com.mycompany.myapp.service.ContractOpportunityQueryService;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -84,6 +85,12 @@ public class ContractOpportunityResource {
     public ResponseEntity<List<IndustryOppCount>> countIndustryOpportunities(IndustryOppCountCriteria criteria) {
         log.debug("REST request to count ContractOpportunities by industry");
         return ResponseEntity.ok().body(contractOpportunityQueryService.countIndustryOpportunities(criteria));
+    }
+
+    @GetMapping("/contract-opportunities/industry_opp_counts_by_naics")
+    public ResponseEntity<List<IndustryOppCount>> countIndustryOpportunitiesByNaics(NaicsCriteria criteria) {
+        log.debug("REST request to count ContractOpportunities by specific Naics Codes");
+        return ResponseEntity.ok().body(contractOpportunityQueryService.countIndustryOpportunitiesByNaics(criteria));
     }
 
 

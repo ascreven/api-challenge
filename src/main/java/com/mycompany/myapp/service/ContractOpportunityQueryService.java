@@ -24,6 +24,7 @@ import com.mycompany.myapp.repository.ContractOpportunityRepository;
 import com.mycompany.myapp.service.dto.ContractOpportunityCriteria;
 import com.mycompany.myapp.domain.IndustryOppCount;
 import com.mycompany.myapp.service.dto.IndustryOppCountCriteria;
+import com.mycompany.myapp.service.dto.NaicsCriteria;
 
 /**
  * Service for executing complex queries for {@link ContractOpportunity} entities in the database.
@@ -80,14 +81,16 @@ public class ContractOpportunityQueryService extends QueryService<ContractOpport
         return contractOpportunityRepository.count(specification);
     }
 
-
+  
     @PersistenceContext
     private EntityManager em;
     @Transactional(readOnly = true)
     public List<IndustryOppCount> countIndustryOpportunities(IndustryOppCountCriteria criteria) {
         log.debug("REST request to count ContractOpportunities by industry " + criteria.getKeywords());
 
- 
+        /* I wasn't able to get hibernate to accept null parameters, so am passing "EMPTY" as a dummy parameter
+         * when the value is null
+         */
         String keywords = "EMPTY";
         if(criteria.getKeywords() != null) {
             keywords = String.join("|", criteria.getKeywords().getIn());
@@ -100,22 +103,26 @@ public class ContractOpportunityQueryService extends QueryService<ContractOpport
             .setParameter(3, (criteria.getSetAside() != null) ? criteria.getSetAside().getEquals() : "EMPTY")
             .getResultList();
 
-        IndustryOppCount count = new IndustryOppCount();
-        count.setId(new Long(1));
-        count.setOpportunities(new Long(5342));
-        count.setCode("840239");
-        count.setTitle("My Fantastic Title");
-
-        IndustryOppCount next = new IndustryOppCount();
-        next.setId(new Long(2));
-        next.setOpportunities(new Long(1612));
-        next.setCode("854938");
-        next.setTitle("My Superb Title");
-
-        ArrayList<IndustryOppCount> result = new ArrayList<IndustryOppCount>();
-        result.add(count);
-        result.add(next);
         return industryCounts;
+    }
+
+    @Transactional(readOnly = true)
+    public List<IndustryOppCount> countIndustryOpportunitiesByNaics(NaicsCriteria criteria) {
+        log.debug("REST request to count ContractOpportunities by specific naics codes " + criteria.getCode());
+
+        if(criteria.getCode() == null) {
+            return new ArrayList<IndustryOppCount>();
+        }
+
+        List<String> codes = new ArrayList<String>();
+        for(int i=0; i<criteria.getCode().getIn().size(); i++) {
+            codes.add(String.format("'%s'", criteria.getCode().getIn().get(i)));
+        }
+
+        return em
+            .createNativeQuery("select * from get_opportunity_counts_for_naics(?);","industryCountMap")
+            .setParameter(1, String.join(", ", codes))
+            .getResultList();
     }
 
     /**

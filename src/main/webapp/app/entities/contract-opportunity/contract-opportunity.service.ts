@@ -33,10 +33,13 @@ export class ContractOpportunityService {
   }
 
   countIndustryOpps(industryOppParams?: any): Observable<IIndustryOpportunityCount[]> {
-
     return this.http
-      .get<IIndustryOpportunityCount[]>(this.resourceUrl + "/industry_opp_counts", {params: industryOppParams})
-      .pipe(map((res) => {return res}));
+      .get<IIndustryOpportunityCount[]>(this.resourceUrl + '/industry_opp_counts', { params: industryOppParams })
+      .pipe(
+        map(res => {
+          return res;
+        })
+      );
   }
 
   protected convertDateFromClient(contractOpportunity: IContractOpportunity): IContractOpportunity {

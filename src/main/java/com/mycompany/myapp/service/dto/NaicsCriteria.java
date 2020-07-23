@@ -30,6 +30,8 @@ public class NaicsCriteria implements Serializable, Criteria {
 
     private StringFilter title;
 
+    private StringFilter description;
+
     public NaicsCriteria() {
     }
 
@@ -37,6 +39,7 @@ public class NaicsCriteria implements Serializable, Criteria {
         this.id = other.id == null ? null : other.id.copy();
         this.code = other.code == null ? null : other.code.copy();
         this.title = other.title == null ? null : other.title.copy();
+        this.description = other.description == null ? null : other.description.copy();
     }
 
     @Override
@@ -66,6 +69,14 @@ public class NaicsCriteria implements Serializable, Criteria {
 
     public void setTitle(StringFilter title) {
         this.title = title;
+    }
+
+    public StringFilter getDescription() {
+        return description;
+    }
+
+    public void setDescription(StringFilter description) {
+        this.description = description;
     }
 
 
@@ -100,6 +111,7 @@ public class NaicsCriteria implements Serializable, Criteria {
                 (id != null ? "id=" + id + ", " : "") +
                 (code != null ? "code=" + code + ", " : "") +
                 (title != null ? "title=" + title + ", " : "") +
+                (description != null ? "description=" + description + ", " : "") +
             "}";
     }
 
