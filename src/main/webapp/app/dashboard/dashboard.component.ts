@@ -18,8 +18,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   authSubscription?: Subscription;
   industryCounts: IIndustryOpportunityCount[] = [];
   message: String = "Please wait while we gather frequently used NCAIS codes.";
-
   keywords: String[] = [];
+
   dashboardForm = new FormGroup({
     parentCode: new FormControl(''),
     keyword: new FormControl(''),
@@ -39,6 +39,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   getIndustryOpportunityCount(industryOppParams = {}): void {
     this.message = "Please wait while we gather frequently used NCAIS codes.";
+    this.industryCounts = [];
     this.contractOpportunityService
       .countIndustryOpps(industryOppParams)
       .subscribe((res: IIndustryOpportunityCount[]) => {
@@ -58,6 +59,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
   addKeyword(): void {
     this.keywords.push(this.dashboardForm.value.keyword);
     this.dashboardForm.controls.keyword.reset();
+  }
+
+  resetForm(): void {
+    this.keywords = [];
+    this.dashboardForm.reset();
   }
 
   removeKeyword(index: number): void {

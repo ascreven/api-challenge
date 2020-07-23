@@ -3,26 +3,27 @@
         <form [formGroup]="dashboardForm" (ngSubmit)="onSubmit()">
             <fieldset class="usa-fieldset">
                 <legend class="usa-legend">NAICS Dashboard</legend>
-                <label class="usa-label">Parent Code
-                    <input class="usa-input" type="text" formControlName="parentCode">
-                </label>
+
+                <label class="usa-label" for="parentcode">Parent Code</label>
+                <input class="usa-input" type="text" id="parentcode" placeholder="Parent Code" formControlName="parentCode">
 
                 <div class="usa-form-group">
                     <label class="usa-label ng-star-inserted" for="keyword">Keywords</label>
                     <div>
                         <input class="usa-input display-inline-block" formControlName="keyword" id="keyword" placeholder="Keyword">
-                        <button class="usa-button margin-left-05 display-inline-block" type="button" (click)="addKeyword()">+ Keyword</button>
+                        <button class="usa-button usa-button--outline tablet:margin-left-05 tablet:margin-top-0 margin-top-2 display-inline-block" type="button" (click)="addKeyword()">+ Keyword</button>
                     </div>
                     <span  *ngFor="let keyword of keywords; index as i" class="usa-tag">{{keyword}}
                         <button class="usa-button--unstyled text-light" (click)="removeKeyword(i)">(x)</button>
                     </span>
                 </div>
 
-                <label class="usa-label">Set Asides
-                    <input class="usa-input" type="text" formControlName="setAside"></label>
+                <label class="usa-label" for="setaside">Set Asides</label>
+                <input class="usa-input" type="text" id="setaside" placeholder="Set Asides" formControlName="setAside"/>
+
+                <button class="usa-button margin-top-2" type="submit">Search</button>
+                <button class="usa-button usa-button--base margin-top-2" (click)="resetForm()" type="button">Reset</button>
             </fieldset>
-            <button class="usa-button usa-button--outline margin-y-3 justify-content-center"
-                type="submit">Search</button>
         </form>
     </div>
 </div>
