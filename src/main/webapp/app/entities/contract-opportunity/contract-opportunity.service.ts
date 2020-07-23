@@ -42,6 +42,16 @@ export class ContractOpportunityService {
       );
   }
 
+  countIndustryOppsFromNaics(naicsParams: any): Observable<IIndustryOpportunityCount[]> {
+    return this.http
+      .get<IIndustryOpportunityCount[]>(this.resourceUrl + '/industry_opp_counts_by_naics', { params: naicsParams })
+      .pipe(
+        map(res => {
+          return res;
+        })
+      );
+  }
+
   protected convertDateFromClient(contractOpportunity: IContractOpportunity): IContractOpportunity {
     const copy: IContractOpportunity = Object.assign({}, contractOpportunity, {
       posteddate:

@@ -1,151 +1,33 @@
-<div class="grid-container">
-    <div class="grid-row">
-        <form class="usa-form usa-form--large desktop:margin-left-9">
-            <fieldset class="usa-fieldset">
-                <legend class="usa-legend">Your NAICS Profile</legend>
-                <div *ngFor="let item of model"> 
-	                <input class="usa-checkbox__input" type="checkbox" id="item.key" name="item.key" value="item.key" checked="item.show">
-	                <label class="usa-checkbox__label" for="item.key">{{item.label}}</label>
-            	</div>
-            </fieldset>
-        </form>
-    </div>
-    <div class="grid-row">
-        <table class="sds-table grid-col-fill">
-            <thead class="sds-table__head">
-                <tr>
-                    <th scope="col">Code</th>
-                    <th scope="col">Industry</th>
-                    <th scope="col">Contract Opportunities</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>12345</td>
 
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12346</td>
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12347</td>
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12348</td>
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12349</td>
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12350</td>
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12345</td>
-
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12346</td>
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12347</td>
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12348</td>
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12349</td>
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12350</td>
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12345</td>
-
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12346</td>
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12347</td>
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12348</td>
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12349</td>
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12350</td>
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12345</td>
-
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12346</td>
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12347</td>
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12348</td>
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12349</td>
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-                <tr>
-                    <td>12350</td>
-                    <td>Lorem ipsum dolor sit amet</td>
-                    <td>consectetur adipiscing elit sed do eiusmod</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+<div class="grid-row">
+    <form class="usa-form usa-form--large desktop:margin-left-9">
+        <fieldset class="usa-fieldset">
+            <legend class="usa-legend">Your NAICS Profile</legend>
+            <div *ngFor="let item of model"> 
+                <input class="usa-checkbox__input" type="checkbox" [id]="item.key" [name]="item.key" [value]="item.key" 
+                	checked (change)="onProfileItemChange($event);">
+                <label class="usa-checkbox__label" [for]="item.key">{{item.label}}</label>
+        	</div>
+        </fieldset>
+    </form>
+</div>
+<div class="grid-row">
+    <table class="sds-table grid-col-fill">
+        <caption class="sr-only">NCAIS Codes</caption>
+        <thead class="sds-table__head">
+            <tr>
+                <th scope="col">Code</th>
+                <th scope="col">Industry</th>
+                <th scope="col">Contract Opportunities</th>
+            </tr>
+        </thead>
+        <tbody *ngIf="naicsCounts.length > 0">
+            <tr *ngFor="let naicsCount of naicsCounts">
+                <td>{{naicsCount.code}}</td>
+                <td>{{naicsCount.title}}</td>
+                <td>{{naicsCount.opportunities}}</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 
