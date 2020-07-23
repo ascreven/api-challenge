@@ -4,7 +4,7 @@ import com.mycompany.myapp.domain.ContractOpportunity;
 import com.mycompany.myapp.service.ContractOpportunityService;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
 import com.mycompany.myapp.service.dto.ContractOpportunityCriteria;
-import com.mycompany.myapp.service.dto.IndustryOppCountDTO;
+import com.mycompany.myapp.domain.IndustryOppCount;
 import com.mycompany.myapp.service.dto.IndustryOppCountCriteria;
 import com.mycompany.myapp.service.ContractOpportunityQueryService;
 
@@ -81,7 +81,7 @@ public class ContractOpportunityResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
      */
     @GetMapping("/contract-opportunities/industry_opp_counts")
-    public ResponseEntity<List<IndustryOppCountDTO>> countIndustryOpportunities(IndustryOppCountCriteria criteria) {
+    public ResponseEntity<List<IndustryOppCount>> countIndustryOpportunities(IndustryOppCountCriteria criteria) {
         log.debug("REST request to count ContractOpportunities by industry");
         return ResponseEntity.ok().body(contractOpportunityQueryService.countIndustryOpportunities(criteria));
     }

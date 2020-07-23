@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.ArrayList;
 
 import javax.persistence.criteria.JoinType;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +22,7 @@ import com.mycompany.myapp.domain.ContractOpportunity;
 import com.mycompany.myapp.domain.*; // for static metamodels
 import com.mycompany.myapp.repository.ContractOpportunityRepository;
 import com.mycompany.myapp.service.dto.ContractOpportunityCriteria;
-import com.mycompany.myapp.service.dto.IndustryOppCountDTO;
+import com.mycompany.myapp.domain.IndustryOppCount;
 import com.mycompany.myapp.service.dto.IndustryOppCountCriteria;
 
 /**
@@ -77,24 +80,42 @@ public class ContractOpportunityQueryService extends QueryService<ContractOpport
         return contractOpportunityRepository.count(specification);
     }
 
-    @Transactional(readOnly = true)
-    public List<IndustryOppCountDTO> countIndustryOpportunities(IndustryOppCountCriteria criteria) {
-        log.debug("REST request to count ContractOpportunities by industry");
 
-        IndustryOppCountDTO count = new IndustryOppCountDTO();
-        count.setOppCount(new Long(5342));
-        count.setNaicsCode("840239");
+    @PersistenceContext
+    private EntityManager em;
+    @Transactional(readOnly = true)
+    public List<IndustryOppCount> countIndustryOpportunities(IndustryOppCountCriteria criteria) {
+        log.debug("REST request to count ContractOpportunities by industry " + criteria.getKeywords());
+
+ 
+        String keywords = "EMPTY";
+        if(criteria.getKeywords() != null) {
+            keywords = String.join("|", criteria.getKeywords().getIn());
+        }
+
+        List<IndustryOppCount> industryCounts = em
+            .createNativeQuery("select * from get_opportunity_counts(?, ?, ?);","industryCountMap")
+            .setParameter(1, (criteria.getParentCode() != null) ? criteria.getParentCode().getEquals() : "EMPTY")
+            .setParameter(2,  keywords)
+            .setParameter(3, (criteria.getSetAside() != null) ? criteria.getSetAside().getEquals() : "EMPTY")
+            .getResultList();
+
+        IndustryOppCount count = new IndustryOppCount();
+        count.setId(new Long(1));
+        count.setOpportunities(new Long(5342));
+        count.setCode("840239");
         count.setTitle("My Fantastic Title");
 
-        IndustryOppCountDTO next = new IndustryOppCountDTO();
-        next.setOppCount(new Long(1612));
-        next.setNaicsCode("854938");
+        IndustryOppCount next = new IndustryOppCount();
+        next.setId(new Long(2));
+        next.setOpportunities(new Long(1612));
+        next.setCode("854938");
         next.setTitle("My Superb Title");
 
-        ArrayList<IndustryOppCountDTO> result = new ArrayList<IndustryOppCountDTO>();
+        ArrayList<IndustryOppCount> result = new ArrayList<IndustryOppCount>();
         result.add(count);
         result.add(next);
-        return result;
+        return industryCounts;
     }
 
     /**
