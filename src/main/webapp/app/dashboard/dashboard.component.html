@@ -40,7 +40,7 @@
         <tbody *ngIf="industryCounts.length > 0">
             <tr *ngFor="let industryCount of industryCounts">
                 <td>{{industryCount.code}}</td>
-                <td>{{industryCount.title}}</td>
+                <td>{{industryCount.title | formatTitle}}</td>
                 <td>{{industryCount.opportunities}}</td>
             </tr>
         </tbody>

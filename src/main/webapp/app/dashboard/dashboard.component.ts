@@ -11,7 +11,7 @@ import { IIndustryOpportunityCount } from 'app/shared/model/industry-opportunity
 @Component({
   selector: 'jhi-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['dashboard.scss'],
+  styleUrls: ['dashboard.scss']
 })
 export class DashboardComponent implements OnInit, OnDestroy {
   account: Account | null = null;
